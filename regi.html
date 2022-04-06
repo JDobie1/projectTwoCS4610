@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Versia Registration </title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="./p3.css" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <script src="./registration.js"></script>
+</head>
+<body>
+<nav class="headbar">
+    <div class="container">
+        <div class="">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="brandname"><img src="portal_logo.png" alt="portal logo" style="width: 48px; height:48px"> Versia Shipping Services</span>
+        </div>
+    </div>
+</nav>
+
+<div class="container-fluid text-center">
+    <div class="row">
+        <div class="sidenav col-sm-3">
+            <a href="home.html">Home</a>
+            <a href="registration.html">Registration</a>
+            <a href="animation.html">Animations</a>
+        </div>
+
+        <h1>Versia Registraion</h1>
+        <form name="myForm" id="myForm" method="POST" onsubmit="return validateForm('myForm');">
+            <div class="col-xs-12 col-sm-9 col-md-9 col-lg-9 text-left">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-6">
+                        <div class="form-group">
+                            <label for="username">Username:</label>
+                            <input id="username" name="Username" class="form-control"
+                                   type="text" placeholder="Enter Username"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Password:</label>
+                            <input id="password" name="password"  class="form-control"
+                                   type="text"  placeholder="Enter Password"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="repeatPassword">Repeat Password:</label>
+                            <input id="repeatPassword" name="repeatPassword" class="form-control"
+                                   type="text" placeholder="Re-enter Password"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="firstName">First Name:</label>
+                            <input id="firstName" name="firstName" class="form-control"
+                                   type="text" placeholder="Enter First Name"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="lastName">Last Name:</label>
+                            <input id="lastName" name="lastName" required class="form-control"
+                                   type="text" placeholder="Enter Last Name"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="addressLine1">Address line 1:</label>
+                            <input id="addressLine1" name="addressLine1" class="form-control"
+                                   type="text" placeholder="Enter Address"/>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-6">
+                        <div class="form-group">
+                            <label for="address line 2">Address line 2:</label>
+                            <input id="address line 2" name="address line 2" class="form-control"
+                                   type="text" placeholder="Enter Address"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="city">City:</label>
+                            <input id="city" name="city" class="form-control"
+                                   type="text" placeholder="Enter City"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="state">State:</label>
+                            <select id="state" name="state" class="form-control">
+                                <option value="" selected="selected" hidden="hidden" disabled="disabled">
+                                    --Please Select--
+                                </option>
+                                <option value="TX">Texas</option>
+                                <option value="FL">Florida</option>
+                                <option value="CA">California</option>
+                                <option value="NY">New York</option>
+                                <option value="IL">Illinois</option>
+                                <option value="MO">Missouri</option>
+                                <option value="KS">Kansas</option>
+                                <option value="IA">Iowa</option>
+                                <option value="OK">Oklahoma</option>
+                                <option value="AR">Arkanasas</option>
+                                <option value="KY">Kentucky</option>
+                                <option value="NE">Nebraska</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="zip">Zip Code:</label>
+                            <input id="zip" name="zip" class="form-control"
+                                   type="text" placeholder="xxxxx" />
+                        </div>
+                        <div class="form-group">
+                            <label for="phoneNumber">Phone Number:</label>
+                            <input id="phoneNumber" name="phoneNumber" class="form-control"
+                                   type="text" maxlength="12" value="" placeholder="xxx-xxx-xxxx"/>
+                        </div>
+
+                        <div class="form-group">
+                            Email:
+                            <input id="email" name="email" class="form-control"
+                                   type="email" placeholder="email@domain.com">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="other">Gender:</label><br>
+                            <input id="male" type="radio" name="gender" value="male"> Male<br>
+                            <input id="female" type="radio" name="gender" value="female"> Female<br>
+                            <input id="other" type="radio" name="gender" value="other"> Other<br>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="married">Marital Status:</label><br>
+                            <input id="single" type="radio" name="marital status" value="single"> Single
+                            <input id="married" type="radio" name="marital status" value="married"> Marital
+                        </div>
+                        <div class="form-group">
+                            <label>Date of Birth: </label>
+                            <input type="date" /><br>
+                        </div>
+                        <div class="status">
+
+                        </div>
+                        <input type="submit" class="btn btn-success" value="Submit ">
+                        <input type="reset" class="btn btn-info" value="Reset ">
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<footer class="container-fluid text-center">
+    <p>Check out these sites:   </p>
+    <p><a href="https://www.amazon.com/" title="amazon">Amazon</a></p><br>
+    <p><a href="http://www.thinkwithportals.com/" title="Portal 2">Portal 2</a></p><br>
+    <p><a href="https://www.ebay.com/" title="Ebay">Ebay</a></p><br>
+
+</footer>
+</body>
+</html>
+
+
