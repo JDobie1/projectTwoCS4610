@@ -51,11 +51,11 @@ if ($result = $mysqli->query('SELECT * FROM movies ORDER BY ' .  $column . ' ' .
         <nav>
             <div class="topnav">
                 <ul>
-                    <li><a class="active" href="#home"> Home</a></li>
-                    <li><a href="#"> Watchlist</a></li>
-                    <li><a href="#"> Favorites</a></li>
-                    <li><a href="#"> Friends</a></li>
-                    <li><a href="#"> Schedule</a></li>
+                    <li><a class="active" href="index.php"> Home</a></li>
+                    <li><a href="watchlist.php"> Watchlist</a></li>
+                    <li><a href="favorites.php"> Favorites</a></li>
+                    <li><a href="friends.php"> Friends</a></li>
+                    <li><a href="schedule.php"> Schedule</a></li>
                 </ul>
 
                 <div class="search-container">
