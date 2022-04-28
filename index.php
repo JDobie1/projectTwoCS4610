@@ -1,33 +1,3 @@
-<?php
-
-$dbhost = "localhost";
-$dbuser = "root";
-$dbpassword = "";
-$dbname = "project_two_cs4610";
-
-$conn = mysqli_connect($dbhost, $dbuser, $dbpassword, $dbname);
-
-
-if (!$conn) {
-    die('Could not connect: ' . mysqli_connect_error());
-}
-
-//$result = mysqli_query($conn, "SELECT * FROM movies");
-
-$columns = array('Production_cost','Name','Release_date', 'BoxOffice');
-
-$column = isset($_GET['column']) && in_array($_GET['column'], $columns) ? $_GET['column'] : $columns[0];
-
-$sort_order = isset($_GET['order']) && strtolower($_GET['order']) == 'desc' ? 'DESC' : 'ASC';
-
-
-if ($result = $conn->query('SELECT * FROM movies ORDER BY ' .  $column . ' ' . $sort_order)) {
-
-    $up_or_down = str_replace(array('ASC','DESC'), array('up','down'), $sort_order);
-    $asc_or_desc = $sort_order == 'ASC' ? 'desc' : 'asc';
-    $add_class = ' class="highlight"';
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -40,17 +10,44 @@ if ($result = $conn->query('SELECT * FROM movies ORDER BY ' .  $column . ' ' . $
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    
+    <!-- Utilizing <style> here because for some reason body and image formatting would not work within the css file -->
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            width: 100%;
+            min-height: 100%;
+            background-image: url('backgroundImage.png');
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+/*            background-size: cover;*/
+        }
+        p > img {
+            width: 150px;
+            height: 150px;
+            object-fit: contain;
+            margin-top: 5px;
+            margin-left: 25px;
+            margin-right: 100px;
+            float: left;
+        }
+    </style>
+    
 </head>
-<header>
-    <div id="top-header">
 
-        <!-- <div class ="logo"><a href="#"><img src="placeholder.png"/></a>
-         </div>-->
+<header>
+
+    <div id="top-header">
+          
 
         <nav>
             <div class="topnav">
-                <ul>
+                <p><img src="umslLogo.jpg"/></p>                
+                <ul>                    
                     <li><a class="active" href="index.php"> Home</a></li>
+                    <li><a href="movies.php"> Movies</a></li>
                     <li><a href="watchlist.php"> Watchlist</a></li>
                     <li><a href="favorites.php"> Favorites</a></li>
                     <li><a href="friends.php"> Friends</a></li>
@@ -69,27 +66,7 @@ if ($result = $conn->query('SELECT * FROM movies ORDER BY ' .  $column . ' ' . $
     </div>
 </header>
 <body>
-<table>
-    <h2> Collected Movies</h2>
-    <tr>
-        <th><a href="index.php?column=name&order=<?php echo $asc_or_desc; ?>">Production Cost<i class="fas fa-sort<?php echo $column == 'Production_cost' ? '-' . $up_or_down : ''; ?>"></i></a></th>
-        <th><a href="index.php?column=age&order=<?php echo $asc_or_desc; ?>">Movie Name<i class="fas fa-sort<?php echo $column == 'Name' ? '-' . $up_or_down : ''; ?>"></i></a></th>
-        <th><a href="index.php?column=joined&order=<?php echo $asc_or_desc; ?>">Release Date<i class="fas fa-sort<?php echo $column == 'Release_date' ? '-' . $up_or_down : ''; ?>"></i></a></th>
-        <th><a href="index.php?column=joined&order=<?php echo $asc_or_desc; ?>">Box Office<i class="fas fa-sort<?php echo $column == 'BoxOffice' ? '-' . $up_or_down : ''; ?>"></i></a></th>
-    </tr>
-    <?php while ($row = $result->fetch_assoc()): ?>
-    <tr>
-        <td<?php echo $column == 'Production_cost' ? $add_class : ''; ?>><?php echo $row['Production_cost']; ?></td>
-        <td<?php echo $column == 'Name' ? $add_class : ''; ?>><?php echo $row['Name']; ?></td>
-        <td<?php echo $column == 'Release_date' ? $add_class : ''; ?>><?php echo $row['Release_date']; ?></td>
-        <td<?php echo $column == 'BoxOffice' ? $add_class : ''; ?>><?php echo $row['BoxOffice']; ?></td>
-    </tr>
-    <?php endwhile; ?>
-</table>
-
 </body>
 </html>
-    <?php
-    $result->free();
-}
-?>
+
+
