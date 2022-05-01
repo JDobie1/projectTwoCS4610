@@ -14,7 +14,7 @@ if (!$conn) {
 
 //$result = mysqli_query($conn, "SELECT * FROM movies");
 
-$columns = array('Production_cost','Name','Release_date', 'BoxOffice');
+$columns = array('MovieID, Production_cost','Name','Release_date', 'BoxOffice');
 
 $column = isset($_GET['column']) && in_array($_GET['column'], $columns) ? $_GET['column'] : $columns[0];
 
@@ -71,7 +71,7 @@ if ($result = $conn->query('SELECT * FROM favorites ORDER BY ' .  $column . ' ' 
     <h2> Favorites</h2>
     <tr>
         <th><a href="index.php?column=joined&order=<?php echo $asc_or_desc; ?>">MovieID<i class="fas fa-sort<?php echo $column == 'MovieID' ? '-' . $up_or_down : ''; ?>"></i></a></th>        
-        <th><a href="index.php?column=joined&order=<?php echo $asc_or_desc; ?>">User<i class="fas fa-sort<?php echo $column == 'User' ? '-' . $up_or_down : ''; ?>"></i></a></th>
+<!--        <th><a href="index.php?column=joined&order=<?php echo $asc_or_desc; ?>">User<i class="fas fa-sort<?php echo $column == 'User' ? '-' . $up_or_down : ''; ?>"></i></a></th>-->
         <th><a href="index.php?column=name&order=<?php echo $asc_or_desc; ?>">Production Cost<i class="fas fa-sort<?php echo $column == 'Production_cost' ? '-' . $up_or_down : ''; ?>"></i></a></th>
         <th><a href="index.php?column=age&order=<?php echo $asc_or_desc; ?>">Movie Name<i class="fas fa-sort<?php echo $column == 'Name' ? '-' . $up_or_down : ''; ?>"></i></a></th>
         <th><a href="index.php?column=joined&order=<?php echo $asc_or_desc; ?>">Release Date<i class="fas fa-sort<?php echo $column == 'Release_date' ? '-' . $up_or_down : ''; ?>"></i></a></th>
@@ -79,6 +79,7 @@ if ($result = $conn->query('SELECT * FROM favorites ORDER BY ' .  $column . ' ' 
     </tr>
     <?php while ($row = $result->fetch_assoc()): ?>
     <tr>
+        <td<?php echo $column == 'MovieID' ? $add_class : ''; ?>><?php echo $row['MovieID']; ?></td>
         <td<?php echo $column == 'Production_cost' ? $add_class : ''; ?>><?php echo $row['Production_cost']; ?></td>
         <td<?php echo $column == 'Name' ? $add_class : ''; ?>><?php echo $row['Name']; ?></td>
         <td<?php echo $column == 'Release_date' ? $add_class : ''; ?>><?php echo $row['Release_date']; ?></td>
