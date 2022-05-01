@@ -7,6 +7,9 @@ $dbname = "project_two_cs4610";
 
 $conn = mysqli_connect($dbhost, $dbuser, $dbpassword, $dbname);
 
+$x = filter_input(INPUT_GET, "movieID");
+$delete = "DELETE FROM favorites WHERE movieID = $x";
+$query= mysqli_query($conn, $delete);
 
 if (!$conn) {
     die('Could not connect: ' . mysqli_connect_error());
@@ -40,6 +43,18 @@ if ($result = $conn->query('SELECT * FROM favorites ORDER BY ' .  $column . ' ' 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="js/projectTwo.js"></script>
+    <style>
+        input[type=button] {
+        background-color: #3399ff;
+        border: none;
+        color: white;
+        padding: 12px 24px;
+        text-decoration: none;
+        margin: 4px 2px;
+        cursor: pointer;
+        }
+    </style>
 </head>
 <header>
     <div id="top-header">
@@ -84,6 +99,12 @@ if ($result = $conn->query('SELECT * FROM favorites ORDER BY ' .  $column . ' ' 
         <td<?php echo $column == 'Name' ? $add_class : ''; ?>><?php echo $row['Name']; ?></td>
         <td<?php echo $column == 'Release_date' ? $add_class : ''; ?>><?php echo $row['Release_date']; ?></td>
         <td<?php echo $column == 'BoxOffice' ? $add_class : ''; ?>><?php echo $row['BoxOffice']; ?></td>
+                
+        <th style="width: 8em">
+            <form>
+                <input type="button" value="Remove from Favorites" onClick="removeFromFavorites(<?php print $row['MovieID']; ?>)" /> 
+            </form>
+        </th>
     </tr>
     <?php endwhile; ?>
 </table>
