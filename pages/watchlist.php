@@ -49,6 +49,9 @@
 			            <li class="nav-item">
 			              <a class="nav-link" href="../index.php">Home</a>
 			            </li>
+                                    <li class="nav-item">
+                                      <a class="nav-link" href="../movies.php">Movies</a>
+                                    </li> 
 			            <li class="nav-item active">
 			              <a class="nav-link" href="watchlist.php">Watchlist</a>
 			            </li>

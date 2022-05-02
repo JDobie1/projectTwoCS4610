@@ -9,6 +9,21 @@
 	  	session_destroy();
 	  	header("location: login.php");
 	  }
+          
+$dbhost = "localhost";
+$dbuser = "root";
+$dbpassword = "";
+$dbname = "project_two_cs4610";
+
+$conn = mysqli_connect($dbhost, $dbuser, $dbpassword, $dbname);
+
+$mID = filter_input(INPUT_GET, "movieID");
+$delete = "DELETE FROM favorites WHERE movieID = $mID";
+$query= mysqli_query($conn, $delete);
+
+if (!$conn) {
+    die('Could not connect: ' . mysqli_connect_error());
+}
 ?>
 
 <!DOCTYPE html>
@@ -49,6 +64,9 @@
 			            <li class="nav-item">
 			              <a class="nav-link" href="../index.php">Home</a>
 			            </li>
+                                    <li class="nav-item">
+                                      <a class="nav-link" href="../movies.php">Movies</a>
+                                    </li>                                    
 			            <li class="nav-item">
 			              <a class="nav-link" href="watchlist.php">Watchlist</a>
 			            </li>
@@ -93,11 +111,53 @@
 			</nav>
 		</header>
 
-		<section>
-			<div class="col-md-12">
-		        <h2 class="pageTitle">Favorites</h2>
-		        
-		    </div>
+            		<section>
+
+			<?php 
+
+				$columns = array('Production_cost','Name','Release_date', 'BoxOffice');
+
+				$column = isset($_GET['column']) && in_array($_GET['column'], $columns) ? $_GET['column'] : $columns[0];
+
+				$sort_order = isset($_GET['order']) && strtolower($_GET['order']) == 'desc' ? 'DESC' : 'ASC';
+
+
+				if ($result = $db->query('SELECT * FROM favorites ORDER BY ' .  $column . ' ' . $sort_order)) {
+
+				    $up_or_down = str_replace(array('ASC','DESC'), array('up','down'), $sort_order);
+				    $asc_or_desc = $sort_order == 'ASC' ? 'desc' : 'asc';
+				    $add_class = ' class="highlight"';
+
+				}
+
+			?>
+
+			<div>
+				<table class="moviesTable">
+				    <h2> Favorites</h2>
+				    <tr>
+				        <th><a href="index.php?column=MovieID&order=<?php echo $asc_or_desc; ?>">Movie ID<i class="fas fa-sort<?php echo $column == 'MovieID' ? '-' . $up_or_down : ''; ?>"></i></a></th>                                        
+				        <th><a href="index.php?column=Production_cost&order=<?php echo $asc_or_desc; ?>">Production Cost<i class="fas fa-sort<?php echo $column == 'Production_cost' ? '-' . $up_or_down : ''; ?>"></i></a></th>
+				        <th><a href="index.php?column=Name&order=<?php echo $asc_or_desc; ?>">Movie Name<i class="fas fa-sort<?php echo $column == 'Name' ? '-' . $up_or_down : ''; ?>"></i></a></th>
+				        <th><a href="index.php?column=Release_date&order=<?php echo $asc_or_desc; ?>">Release Date<i class="fas fa-sort<?php echo $column == 'Release_date' ? '-' . $up_or_down : ''; ?>"></i></a></th>
+				        <th><a href="index.php?column=BoxOffice&order=<?php echo $asc_or_desc; ?>">Box Office<i class="fas fa-sort<?php echo $column == 'BoxOffice' ? '-' . $up_or_down : ''; ?>"></i></a></th>
+				    </tr>
+				    <?php while ($row = $result->fetch_assoc()): ?>
+				    <tr>
+                                        <td<?php echo $column == 'MovieID' ? $add_class : ''; ?>><?php echo $row['MovieID']; ?></td>
+				        <td<?php echo $column == 'Production_cost' ? $add_class : ''; ?>><?php echo $row['Production_cost']; ?></td>
+				        <td<?php echo $column == 'Name' ? $add_class : ''; ?>><?php echo $row['Name']; ?></td>
+				        <td<?php echo $column == 'Release_date' ? $add_class : ''; ?>><?php echo $row['Release_date']; ?></td>
+				        <td<?php echo $column == 'BoxOffice' ? $add_class : ''; ?>><?php echo $row['BoxOffice']; ?></td>
+				            <th style="width: 8em">
+                                                <form>
+                                                    <input type="button" value="Delete" onClick="removeFromFavorites(<?php print $row['MovieID']; ?>)" /> 
+                                                </form>
+                                            </th>
+                                    </tr>
+				    <?php endwhile; ?>
+				</table>
+			</div>
 		</section>
 
 

@@ -1,5 +1,6 @@
 document{
 	background-color: grey;
+        
 }
 
 .pageTitle{
@@ -62,3 +63,14 @@ document{
 .moviesTable tr .highlight {
     background-color: #f9fafb;
 }
+
+        input[type=button] {
+        background-color: #3399ff;
+        border: none;
+        color: white;
+        padding: 6px 12px;
+        text-decoration: none;
+        margin: 4px 2px;
+        cursor: pointer;
+        }
+        

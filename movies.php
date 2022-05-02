@@ -9,6 +9,22 @@
 	  	session_destroy();
 	  	header("location: pages/login.php");
 	  }
+          
+$dbhost = "localhost";
+$dbuser = "root";
+$dbpassword = "";
+$dbname = "project_two_cs4610";
+
+$conn = mysqli_connect($dbhost, $dbuser, $dbpassword, $dbname);
+$x = filter_input(INPUT_GET, "movieID");
+
+if (!$conn) {
+    die('Could not connect: ' . mysqli_connect_error());
+}
+
+
+    $insert = "INSERT INTO favorites (MovieID, Name, BoxOffice, Release_date, Production_cost) SELECT MovieID, Name, BoxOffice, Release_date, Production_cost FROM movies WHERE MovieID = $x";
+    $resultInsert = mysqli_query($conn, $insert);
 ?>
 
 <!DOCTYPE html>
@@ -31,21 +47,8 @@
 		<!--Importing my own external files.-->
 		<link href="css/style.css" rel="stylesheet" type="text/css" />
 		<script src="js/script.js" type="text/javascript"></script>
-                
-            <style>
-                body {
-                margin: 0;
-                padding: 0;
-                font-family: Arial, Helvetica, sans-serif;
-                width: 100%;
-                min-height: 100%;
-                background-image: url('backgroundImage.png');
-                background-repeat: no-repeat;
-                background-attachment: fixed;
-    /*          background-size: cover;*/
-            }
-            </style>
 	</head>
+
 	<body>
 		<header>
 			<nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -56,10 +59,10 @@
 
 				<div class="collapse navbar-collapse" id="navbarSupportedContent">
 					<ul class="navbar-nav mr-auto">
-						<li class="nav-item active">
+						<li class="nav-item">
 							<a class="nav-link" href="index.php">Home</a>
 						</li>
-                                                <li class="nav-item">
+                                                <li class="nav-item active">
 							<a class="nav-link" href="movies.php">Movies</a>
 						</li>
 						<li class="nav-item">
@@ -105,6 +108,56 @@
 
 			</nav>
 		</header>
+
+		<section>
+
+			<?php 
+
+				$columns = array('Production_cost','Name','Release_date', 'BoxOffice');
+
+				$column = isset($_GET['column']) && in_array($_GET['column'], $columns) ? $_GET['column'] : $columns[0];
+
+				$sort_order = isset($_GET['order']) && strtolower($_GET['order']) == 'desc' ? 'DESC' : 'ASC';
+
+
+				if ($result = $db->query('SELECT * FROM movies ORDER BY ' .  $column . ' ' . $sort_order)) {
+
+				    $up_or_down = str_replace(array('ASC','DESC'), array('up','down'), $sort_order);
+				    $asc_or_desc = $sort_order == 'ASC' ? 'desc' : 'asc';
+				    $add_class = ' class="highlight"';
+
+				}
+
+			?>
+
+			<div>
+				<table class="moviesTable">
+				    <h2> Collected Movies</h2>
+				    <tr>
+				        <th><a href="index.php?column=MovieID&order=<?php echo $asc_or_desc; ?>">Movie ID<i class="fas fa-sort<?php echo $column == 'MovieID' ? '-' . $up_or_down : ''; ?>"></i></a></th>                                        
+				        <th><a href="index.php?column=Production_cost&order=<?php echo $asc_or_desc; ?>">Production Cost<i class="fas fa-sort<?php echo $column == 'Production_cost' ? '-' . $up_or_down : ''; ?>"></i></a></th>
+				        <th><a href="index.php?column=Name&order=<?php echo $asc_or_desc; ?>">Movie Name<i class="fas fa-sort<?php echo $column == 'Name' ? '-' . $up_or_down : ''; ?>"></i></a></th>
+				        <th><a href="index.php?column=Release_date&order=<?php echo $asc_or_desc; ?>">Release Date<i class="fas fa-sort<?php echo $column == 'Release_date' ? '-' . $up_or_down : ''; ?>"></i></a></th>
+				        <th><a href="index.php?column=BoxOffice&order=<?php echo $asc_or_desc; ?>">Box Office<i class="fas fa-sort<?php echo $column == 'BoxOffice' ? '-' . $up_or_down : ''; ?>"></i></a></th>
+				    </tr>
+				    <?php while ($row = $result->fetch_assoc()): ?>
+				    <tr>
+                                        <td<?php echo $column == 'MovieID' ? $add_class : ''; ?>><?php echo $row['MovieID']; ?></td>
+				        <td<?php echo $column == 'Production_cost' ? $add_class : ''; ?>><?php echo $row['Production_cost']; ?></td>
+				        <td<?php echo $column == 'Name' ? $add_class : ''; ?>><?php echo $row['Name']; ?></td>
+				        <td<?php echo $column == 'Release_date' ? $add_class : ''; ?>><?php echo $row['Release_date']; ?></td>
+				        <td<?php echo $column == 'BoxOffice' ? $add_class : ''; ?>><?php echo $row['BoxOffice']; ?></td>
+				            <th style="width: 8em">
+                                                <form>
+                                                    <input type="button" value="Add to Favorites" onClick="insertToFavorites(<?php print $row['MovieID']; ?>)" /> 
+                                                </form>
+                                            </th>
+                                    </tr>
+				    <?php endwhile; ?>
+				</table>
+			</div>
+		</section>
+
 
 		<footer>
 
