@@ -22,7 +22,6 @@ if (!$conn) {
     die('Could not connect: ' . mysqli_connect_error());
 }
 
-
     $insert = "INSERT INTO favorites (MovieID, Name, BoxOffice, Release_date, Production_cost) SELECT MovieID, Name, BoxOffice, Release_date, Production_cost FROM movies WHERE MovieID = $x";
     $resultInsert = mysqli_query($conn, $insert);
 ?>
@@ -47,6 +46,19 @@ if (!$conn) {
 		<!--Importing my own external files.-->
 		<link href="css/style.css" rel="stylesheet" type="text/css" />
 		<script src="js/script.js" type="text/javascript"></script>
+            <style>
+                body {
+                    margin: 0;
+                    padding: 0;
+                    font-family: Arial, Helvetica, sans-serif;
+                    width: 100%;
+                    min-height: 100%;
+                    background-image: url('background_noText.png');
+                    background-repeat: no-repeat;
+                    background-attachment: fixed;
+                    /*background-size: cover;*/
+                }
+            </style>
 	</head>
 
 	<body>
@@ -108,7 +120,12 @@ if (!$conn) {
 
 			</nav>
 		</header>
-
+		<section>
+			<div class="col-md-12">
+		        <h2 class="pageTitle">Movies</h2>
+		        
+		    </div>
+		</section>
 		<section>
 
 			<?php 
@@ -117,13 +134,18 @@ if (!$conn) {
 
 				$column = isset($_GET['column']) && in_array($_GET['column'], $columns) ? $_GET['column'] : $columns[0];
 
-				$sort_order = isset($_GET['order']) && strtolower($_GET['order']) == 'desc' ? 'DESC' : 'ASC';
+//				$sort_order = isset($_GET['order']) && strtolower($_GET['order']) == 'desc' ? 'DESC' : 'ASC';
 
+                                if(intval(filter_input(INPUT_GET, "orientation")) == 1) {
+                                    $sort = "DESC";
+                                }
+                                else {
+                                    $sort = "ASC";
+                                }
+				if ($result = $db->query('SELECT * FROM movies ORDER BY ' .  $column . ' ' . $sort)) {
 
-				if ($result = $db->query('SELECT * FROM movies ORDER BY ' .  $column . ' ' . $sort_order)) {
-
-				    $up_or_down = str_replace(array('ASC','DESC'), array('up','down'), $sort_order);
-				    $asc_or_desc = $sort_order == 'ASC' ? 'desc' : 'asc';
+				    $up_or_down = str_replace(array('ASC','DESC'), array('up','down'), $sort);
+				    $asc_or_desc = $sort == 'ASC' ? 'desc' : 'asc';
 				    $add_class = ' class="highlight"';
 
 				}
@@ -132,13 +154,13 @@ if (!$conn) {
 
 			<div>
 				<table class="moviesTable">
-				    <h2> Collected Movies</h2>
+
 				    <tr>
-				        <th><a href="index.php?column=MovieID&order=<?php echo $asc_or_desc; ?>">Movie ID<i class="fas fa-sort<?php echo $column == 'MovieID' ? '-' . $up_or_down : ''; ?>"></i></a></th>                                        
-				        <th><a href="index.php?column=Production_cost&order=<?php echo $asc_or_desc; ?>">Production Cost<i class="fas fa-sort<?php echo $column == 'Production_cost' ? '-' . $up_or_down : ''; ?>"></i></a></th>
-				        <th><a href="index.php?column=Name&order=<?php echo $asc_or_desc; ?>">Movie Name<i class="fas fa-sort<?php echo $column == 'Name' ? '-' . $up_or_down : ''; ?>"></i></a></th>
-				        <th><a href="index.php?column=Release_date&order=<?php echo $asc_or_desc; ?>">Release Date<i class="fas fa-sort<?php echo $column == 'Release_date' ? '-' . $up_or_down : ''; ?>"></i></a></th>
-				        <th><a href="index.php?column=BoxOffice&order=<?php echo $asc_or_desc; ?>">Box Office<i class="fas fa-sort<?php echo $column == 'BoxOffice' ? '-' . $up_or_down : ''; ?>"></i></a></th>
+				        <th><a href="movies.php?column=MovieID&order=<?php echo $asc_or_desc; ?>">Movie ID<i class="fas fa-sort<?php echo $column == 'MovieID' ? '-' . $up_or_down : ''; ?>"></i></a></th>                                        
+				        <th><a href="movies.php?column=Production_cost&order=<?php echo $asc_or_desc; ?>">Production Cost<i class="fas fa-sort<?php echo $column == 'Production_cost' ? '-' . $up_or_down : ''; ?>"></i></a></th>
+				        <th><a href="movies.php?column=Name&order=<?php echo $asc_or_desc; ?>">Movie Name<i class="fas fa-sort<?php echo $column == 'Name' ? '-' . $up_or_down : ''; ?>"></i></a></th>
+				        <th><a href="movies.php?column=Release_date&order=<?php echo $asc_or_desc; ?>">Release Date<i class="fas fa-sort<?php echo $column == 'Release_date' ? '-' . $up_or_down : ''; ?>"></i></a></th>
+				        <th><a href="movies.php?column=BoxOffice&order=<?php echo $asc_or_desc; ?>">Box Office<i class="fas fa-sort<?php echo $column == 'BoxOffice' ? '-' . $up_or_down : ''; ?>"></i></a></th>
 				    </tr>
 				    <?php while ($row = $result->fetch_assoc()): ?>
 				    <tr>
@@ -147,9 +169,9 @@ if (!$conn) {
 				        <td<?php echo $column == 'Name' ? $add_class : ''; ?>><?php echo $row['Name']; ?></td>
 				        <td<?php echo $column == 'Release_date' ? $add_class : ''; ?>><?php echo $row['Release_date']; ?></td>
 				        <td<?php echo $column == 'BoxOffice' ? $add_class : ''; ?>><?php echo $row['BoxOffice']; ?></td>
-				            <th style="width: 8em">
+				            <th>
                                                 <form>
-                                                    <input type="button" value="Add to Favorites" onClick="insertToFavorites(<?php print $row['MovieID']; ?>)" /> 
+                                                    <input type="button" value="Add to Favorites" onClick="insertToFavorites(<?php print $row['MovieID']; print 1;?>)" /> 
                                                 </form>
                                             </th>
                                     </tr>

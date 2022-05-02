@@ -34,16 +34,16 @@
                 
             <style>
                 body {
-                margin: 0;
-                padding: 0;
-                font-family: Arial, Helvetica, sans-serif;
-                width: 100%;
-                min-height: 100%;
-                background-image: url('backgroundImage.png');
-                background-repeat: no-repeat;
-                background-attachment: fixed;
-    /*          background-size: cover;*/
-            }
+                    margin: 0;
+                    padding: 0;
+                    font-family: Arial, Helvetica, sans-serif;
+                    width: 100%;
+                    min-height: 100%;
+                    background-image: url('backgroundImage.png');
+                    background-repeat: no-repeat;
+                    background-attachment: fixed;
+                    /*background-size: cover;*/
+                }
             </style>
 	</head>
 	<body>
