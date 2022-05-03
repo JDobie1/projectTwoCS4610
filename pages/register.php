@@ -92,7 +92,7 @@
 		</header>
 
 		<section>
-			<div class="col-md-12">
+			<div style="color: black; background-color: rgba(211,211,211, .5)">
 				<h2 class="pageTitle">Register a New User</h2>
 				<form method="POST" action="register.php">
 

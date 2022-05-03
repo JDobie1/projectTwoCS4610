@@ -110,7 +110,7 @@
 		</header>
 
 		<section>
-			<div class="col-md-12">
+			<div style="color: black; background-color: rgba(211,211,211, .5)">
 		        <h2 class="pageTitle">My Profile</h2>
 		        <form method="POST" action="myProfile.php">
 
