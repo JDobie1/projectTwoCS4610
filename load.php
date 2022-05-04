@@ -1,6 +1,6 @@
 <?php
 	session_start();
-	$db = mysqli_connect('localhost', 'root', '', 'Matt');
+	$db = mysqli_connect('localhost', 'root', '', 'project_two_cs4610');
 
 	function getDateFromString($input){
 		$time_input = str_replace("-", "/", $input);
@@ -8,8 +8,6 @@
 		$date_input = getDate($time_input);  
 		return $date_input['year'] . "-" . $date_input['mon'] . "-" . $date_input['mday'];
 	}
-
-
 ?>
 
 <html>
@@ -90,7 +88,6 @@
 			</nav>
 		</header>
 
-
 		<section>
 			<form method="POST" action="load.php">
 				<button type="submit" class="btn friendRequest" name="load_movies">Load Movies</button>
@@ -131,7 +128,6 @@
 					$data = fgetcsv($open, 1000, ",");
 
 					
-
 					while(($data = fgetcsv($open, 1000, ",")) !== FALSE)
 					{
 
@@ -144,7 +140,6 @@
 						$query = "INSERT INTO actor (ActorID, Fname, Lname, Award_num)
 									VALUES (null, '$fname', '$lname', '$awards');";
 
-						echo $query;
 						mysqli_query($db, $query);
 					}
 
@@ -157,9 +152,7 @@
 					$open = fopen("data/theater.csv", "r");
 
 					$data = fgetcsv($open, 1000, ",");
-
 					
-
 					while(($data = fgetcsv($open, 1000, ",")) !== FALSE)
 					{
 
@@ -197,8 +190,8 @@
 
 						//var_dump($data);
 
-						$query = "INSERT INTO users (UserID, Fname, Lname, Role, State, Zip)
-									VALUES (null, '$fname', '$lname', '$role', '$state', '$zip');";
+						$query = "INSERT INTO users (Fname, Lname, Role, UserID, State, Zip)
+									VALUES ('$fname', '$lname', '$role', NULL, '$state', '$zip');";
 
 						//echo $query;
 						mysqli_query($db, $query);

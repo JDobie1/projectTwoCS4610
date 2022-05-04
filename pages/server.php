@@ -11,7 +11,7 @@ $zip = "";
 
 $errors = array(); 
 
-$db = mysqli_connect('localhost', 'root', '', 'matt');
+$db = mysqli_connect('localhost', 'root', '', 'project_two_cs4610');
 
 if (isset($_POST['reg_user'])) {
   $fName = mysqli_real_escape_string($db, $_POST['fName']);

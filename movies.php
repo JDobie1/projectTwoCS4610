@@ -9,33 +9,16 @@
 	  	session_destroy();
 	  	header("location: pages/login.php");
 	  }
-          
+        $x = filter_input(INPUT_GET, "movieID");
+        
 	$dbhost = "localhost";
 	$dbuser = "root";
 	$dbpassword = "";
-	$dbname = "matt";
+	$dbname = "project_two_cs4610";
 
 	$conn = mysqli_connect($dbhost, $dbuser, $dbpassword, $dbname);
-	if(isset($_GET["movieID"]))
-	{
-		$x = $_GET["movieID"];
-
-		$lName = $_SESSION['lName'];
-		$fName = $_SESSION['fName'];
-
-		$query = "SELECT UserID 
-				FROM users
-				WHERE Lname = '$lName' AND Fname = '$fName'";
-
-		$result = mysqli_query($db, $query);
-
-		$userId = $result->fetch_array()[0];
-
-		$insert = "INSERT INTO favorites (MovieID, User) VALUES ($x, $userId)";
-		mysqli_query($conn, $insert);
-	}
-
-	
+        $insert = "INSERT INTO favorites (MovieID, Name, BoxOffice, Release_date, Production_cost) SELECT MovieID, Name, BoxOffice, Release_date, Production_cost FROM movies WHERE MovieID = $x";
+        $resultInsert = mysqli_query($conn, $insert);	
 ?>
 
 <!DOCTYPE html>
