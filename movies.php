@@ -10,7 +10,7 @@
 	  	header("location: pages/login.php");
 	  }
         $x = filter_input(INPUT_GET, "movieID");
-        
+        $y = filter_input(INPUT_GET, "wMovieID");
 	$dbhost = "localhost";
 	$dbuser = "root";
 	$dbpassword = "";
@@ -18,7 +18,10 @@
 
 	$conn = mysqli_connect($dbhost, $dbuser, $dbpassword, $dbname);
         $insert = "INSERT INTO favorites (MovieID, Name, BoxOffice, Release_date, Production_cost) SELECT MovieID, Name, BoxOffice, Release_date, Production_cost FROM movies WHERE MovieID = $x";
-        $resultInsert = mysqli_query($conn, $insert);	
+        $resultInsert = mysqli_query($conn, $insert);
+        
+        $insertWatch = "INSERT INTO watchlist (MovieID, Name, BoxOffice, Release_date, Production_cost) SELECT MovieID, Name, BoxOffice, Release_date, Production_cost FROM movies WHERE MovieID = $y";
+        $resultWatch = mysqli_query($conn, $insertWatch);
 ?>
 
 <!DOCTYPE html>
@@ -101,7 +104,7 @@
 		</header>
 		<section>
 			<div class="col-md-12">
-		        <h2 class="pageTitle">Movies</h2>
+		        <h2 class="fade-in-text">Movies</h2>
 		        
 		    </div>
 		</section>
@@ -167,6 +170,7 @@
 			            <th>
                             <form>
                                 <input type="button" value="Add to Favorites" onClick="insertToFavorites(<?php print $row['MovieID']; ?>)" /> 
+                                <input type="button" value="Add to Watchlist" onClick="insertToWatch(<?php print $row['BoxOffice']; ?>)" /> 
                             </form>
                         </th>
                     </tr>

@@ -17,8 +17,6 @@
 
 	<head>
 		<title>Social Theater - <?php echo $_SESSION['fName']?> Profile</title>
-
-
 		<!--Importing libraries: Bootstrap, jquery, fonts.-->
 	    <link href="../css/bootstrap.min.css" rel="stylesheet" type="text/css" />
 	    <link href="../css/bootstrap-grid.min.css" rel="stylesheet" type="text/css" />
@@ -96,11 +94,10 @@
 
 		<section>
 			<div class="col-md-12">
-		        <h2 class="pageTitle">My Profile</h2>
+		        <h2 class="fade-in-text">My Profile</h2>
 		        <form method="POST" action="myProfile.php">
 
 		          <?php include('errors.php'); ?>
-
 
 		          <?php
 
@@ -125,7 +122,6 @@
 		            	<p><?php echo $fName ?></p>
 		            </div>
 		          </div>
-
 
 		          <div class="inputGroup col-md-6 offset-md-3 row">
 		          	<label class="col-md-6">Last Name:</label>

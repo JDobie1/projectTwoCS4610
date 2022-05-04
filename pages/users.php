@@ -55,10 +55,10 @@
 		        <li class="nav-item">
 		          <a class="nav-link" href="watchlist.php">Watchlist</a>
 		        </li>
-		        <li class="nav-item active">
+		        <li class="nav-item">
 		          <a class="nav-link" href="favorites.php">Favorites</a>
 		        </li>
-		        <li class="nav-item">
+		        <li class="nav-item active">
 		          <a class="nav-link" href="users.php">Users</a>
 		        </li>
 		        <li class="nav-item">
@@ -95,7 +95,7 @@
 
 		<section>
 			<div class="col-md-12">
-		        <h2 class="pageTitle">Users</h2>
+		        <h2 class="fade-in-text">Users</h2>
 
 
 		        <form method="POST" action="users.php">

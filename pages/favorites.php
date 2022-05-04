@@ -9,7 +9,7 @@
 	  	session_destroy();
 	  	header("location: login.php");
 	  }
-          
+         
 $dbhost = "localhost";
 $dbuser = "root";
 $dbpassword = "";
@@ -87,9 +87,6 @@ if (!$conn) {
 			              <a class="nav-link" href="favorites.php">Favorites</a>
 			            </li>
 			            <li class="nav-item">
-			              <a class="nav-link" href="schedule.php">Schedule</a>
-			            </li>
-			            <li class="nav-item">
 			              <a class="nav-link" href="users.php">Users</a>
 			            </li>
 			            <li class="nav-item">
@@ -120,14 +117,12 @@ if (!$conn) {
                                             <?php  endif ?>
                                         </ul>
 				</div>
-
 			</nav>
 		</header>
 		<div class="col-md-12">
-		        <h2 class="pageTitle">Your Favorites</h2>		        
+		        <h2 class="fade-in-text">Your Favorites</h2>		        
 		</div>
             		<section>
-
 			<?php 
 
 				$columns = array('Production_cost','Name','Release_date', 'BoxOffice');
@@ -136,13 +131,12 @@ if (!$conn) {
 
 				$sort_order = isset($_GET['order']) && strtolower($_GET['order']) == 'desc' ? 'DESC' : 'ASC';
 
-
 				if ($result = $db->query('SELECT * FROM favorites ORDER BY ' .  $column . ' ' . $sort_order)) {
 
 				    $up_or_down = str_replace(array('ASC','DESC'), array('up','down'), $sort_order);
 				    $asc_or_desc = $sort_order == 'ASC' ? 'desc' : 'asc';
 				    $add_class = ' class="highlight"';
-
+                                    
 				}
 
 			?>

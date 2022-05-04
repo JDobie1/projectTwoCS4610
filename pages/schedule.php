@@ -111,7 +111,7 @@
 
 		<section>
 			<div class="col-md-12">
-		        <h2 class="pageTitle">Schedule</h2>
+		        <h2 class="fade-in-text">Schedule</h2>
 		        
 		    </div>
 		</section>

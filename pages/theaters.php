@@ -95,7 +95,7 @@
 
 		<section>
 			<div class="col-md-12">
-		        <h2 class="pageTitle">Theaters</h2>
+		        <h2 class="fade-in-text">Theaters</h2>
 		    </div>
 
 
