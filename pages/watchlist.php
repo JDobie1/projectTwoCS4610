@@ -60,28 +60,25 @@
 
 				<div class="collapse navbar-collapse" id="navbarSupportedContent">
 					<ul class="navbar-nav mr-auto">
-			            <li class="nav-item">
-			              <a class="nav-link" href="../index.php">Home</a>
-			            </li>
-                                    <li class="nav-item">
-                                      <a class="nav-link" href="../movies.php">Movies</a>
-                                    </li> 
-			            <li class="nav-item active">
-			              <a class="nav-link" href="watchlist.php">Watchlist</a>
-			            </li>
-			            <li class="nav-item">
-			              <a class="nav-link" href="favorites.php">Favorites</a>
-			            </li>
-			            <li class="nav-item">
-			              <a class="nav-link" href="schedule.php">Schedule</a>
-			            </li>
-			            <li class="nav-item">
-			              <a class="nav-link" href="users.php">Users</a>
-			            </li>
-			            <li class="nav-item">
-			              <a class="nav-link" href="theaters.php">Theaters</a>
-			            </li>
-			          </ul>
+				        <li class="nav-item">
+				          <a class="nav-link" href="../index.php">Home</a>
+				        </li>
+				        <li class="nav-item">
+				          <a class="nav-link" href="../movies.php">Movies</a>
+				        </li>                                    
+				        <li class="nav-item">
+				          <a class="nav-link" href="watchlist.php">Watchlist</a>
+				        </li>
+				        <li class="nav-item active">
+				          <a class="nav-link" href="favorites.php">Favorites</a>
+				        </li>
+				        <li class="nav-item">
+				          <a class="nav-link" href="users.php">Users</a>
+				        </li>
+				        <li class="nav-item">
+				          <a class="nav-link" href="theaters.php">Theaters</a>
+				        </li>
+				      </ul>
 
 					<ul class="navbar-nav ms-auto">
 						<?php if(count($_SESSION) > 0) : ?>

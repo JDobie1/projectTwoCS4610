@@ -10,20 +10,32 @@
 	  	header("location: pages/login.php");
 	  }
           
-$dbhost = "localhost";
-$dbuser = "root";
-$dbpassword = "";
-$dbname = "project_two_cs4610";
+	$dbhost = "localhost";
+	$dbuser = "root";
+	$dbpassword = "";
+	$dbname = "matt";
 
-$conn = mysqli_connect($dbhost, $dbuser, $dbpassword, $dbname);
-$x = filter_input(INPUT_GET, "movieID");
+	$conn = mysqli_connect($dbhost, $dbuser, $dbpassword, $dbname);
+	if(isset($_GET["movieID"]))
+	{
+		$x = $_GET["movieID"];
 
-if (!$conn) {
-    die('Could not connect: ' . mysqli_connect_error());
-}
+		$lName = $_SESSION['lName'];
+		$fName = $_SESSION['fName'];
 
-    $insert = "INSERT INTO favorites (MovieID, Name, BoxOffice, Release_date, Production_cost) SELECT MovieID, Name, BoxOffice, Release_date, Production_cost FROM movies WHERE MovieID = $x";
-    $resultInsert = mysqli_query($conn, $insert);
+		$query = "SELECT UserID 
+				FROM users
+				WHERE Lname = '$lName' AND Fname = '$fName'";
+
+		$result = mysqli_query($db, $query);
+
+		$userId = $result->fetch_array()[0];
+
+		$insert = "INSERT INTO favorites (MovieID, User) VALUES ($x, $userId)";
+		mysqli_query($conn, $insert);
+	}
+
+	
 ?>
 
 <!DOCTYPE html>
@@ -46,19 +58,6 @@ if (!$conn) {
 		<!--Importing my own external files.-->
 		<link href="css/style.css" rel="stylesheet" type="text/css" />
 		<script src="js/script.js" type="text/javascript"></script>
-            <style>
-                body {
-                    margin: 0;
-                    padding: 0;
-                    font-family: Arial, Helvetica, sans-serif;
-                    width: 100%;
-                    min-height: 100%;
-                    background-image: url('background_noText.png');
-                    background-repeat: no-repeat;
-                    background-attachment: fixed;
-                    /*background-size: cover;*/
-                }
-            </style>
 	</head>
 
 	<body>
@@ -74,7 +73,7 @@ if (!$conn) {
 						<li class="nav-item">
 							<a class="nav-link" href="index.php">Home</a>
 						</li>
-                                                <li class="nav-item active">
+                        <li class="nav-item active">
 							<a class="nav-link" href="movies.php">Movies</a>
 						</li>
 						<li class="nav-item">
@@ -82,9 +81,6 @@ if (!$conn) {
 						</li>
 						<li class="nav-item">
 							<a class="nav-link" href="pages/favorites.php">Favorites</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link" href="pages/schedule.php">Schedule</a>
 						</li>
 						<li class="nav-item">
 							<a class="nav-link" href="pages/users.php">Users</a>
@@ -136,12 +132,13 @@ if (!$conn) {
 
 //				$sort_order = isset($_GET['order']) && strtolower($_GET['order']) == 'desc' ? 'DESC' : 'ASC';
 
-                                if(intval(filter_input(INPUT_GET, "orientation")) == 1) {
-                                    $sort = "DESC";
-                                }
-                                else {
-                                    $sort = "ASC";
-                                }
+                if(intval(filter_input(INPUT_GET, "orientation")) == 1) {
+                    $sort = "DESC";
+                }
+                else {
+                    $sort = "ASC";
+                }
+
 				if ($result = $db->query('SELECT * FROM movies ORDER BY ' .  $column . ' ' . $sort)) {
 
 				    $up_or_down = str_replace(array('ASC','DESC'), array('up','down'), $sort);
@@ -156,25 +153,40 @@ if (!$conn) {
 				<table class="moviesTable">
 
 				    <tr>
-				        <th><a href="movies.php?column=MovieID&order=<?php echo $asc_or_desc; ?>">Movie ID<i class="fas fa-sort<?php echo $column == 'MovieID' ? '-' . $up_or_down : ''; ?>"></i></a></th>                                        
-				        <th><a href="movies.php?column=Production_cost&order=<?php echo $asc_or_desc; ?>">Production Cost<i class="fas fa-sort<?php echo $column == 'Production_cost' ? '-' . $up_or_down : ''; ?>"></i></a></th>
-				        <th><a href="movies.php?column=Name&order=<?php echo $asc_or_desc; ?>">Movie Name<i class="fas fa-sort<?php echo $column == 'Name' ? '-' . $up_or_down : ''; ?>"></i></a></th>
-				        <th><a href="movies.php?column=Release_date&order=<?php echo $asc_or_desc; ?>">Release Date<i class="fas fa-sort<?php echo $column == 'Release_date' ? '-' . $up_or_down : ''; ?>"></i></a></th>
-				        <th><a href="movies.php?column=BoxOffice&order=<?php echo $asc_or_desc; ?>">Box Office<i class="fas fa-sort<?php echo $column == 'BoxOffice' ? '-' . $up_or_down : ''; ?>"></i></a></th>
+				        <th>
+				        	<a href="movies.php?column=MovieID&order=<?php echo $asc_or_desc; ?>">Movie ID<i class="fas fa-sort<?php echo $column == 'MovieID' ? '-' . $up_or_down : ''; ?>"></i>
+				        	</a>
+				        </th>                                        
+				        <th>
+				        	<a href="movies.php?column=Production_cost&order=<?php echo $asc_or_desc; ?>">Production Cost<i class="fas fa-sort<?php echo $column == 'Production_cost' ? '-' . $up_or_down : ''; ?>"></i>
+				        	</a>
+				        </th>
+				        <th>
+				        	<a href="movies.php?column=Name&order=<?php echo $asc_or_desc; ?>">Movie Name<i class="fas fa-sort<?php echo $column == 'Name' ? '-' . $up_or_down : ''; ?>"></i>
+				        	</a>
+				        </th>
+				        <th>
+				        	<a href="movies.php?column=Release_date&order=<?php echo $asc_or_desc; ?>">Release Date<i class="fas fa-sort<?php echo $column == 'Release_date' ? '-' . $up_or_down : ''; ?>"></i>
+				        	</a>
+				        </th>
+				        <th>
+				        	<a href="movies.php?column=BoxOffice&order=<?php echo $asc_or_desc; ?>">Box Office<i class="fas fa-sort<?php echo $column == 'BoxOffice' ? '-' . $up_or_down : ''; ?>"></i>
+				        	</a>
+				        </th>
 				    </tr>
 				    <?php while ($row = $result->fetch_assoc()): ?>
 				    <tr>
-                                        <td<?php echo $column == 'MovieID' ? $add_class : ''; ?>><?php echo $row['MovieID']; ?></td>
+                        <td<?php echo $column == 'MovieID' ? $add_class : ''; ?>><?php echo $row['MovieID']; ?></td>
 				        <td<?php echo $column == 'Production_cost' ? $add_class : ''; ?>><?php echo $row['Production_cost']; ?></td>
 				        <td<?php echo $column == 'Name' ? $add_class : ''; ?>><?php echo $row['Name']; ?></td>
 				        <td<?php echo $column == 'Release_date' ? $add_class : ''; ?>><?php echo $row['Release_date']; ?></td>
 				        <td<?php echo $column == 'BoxOffice' ? $add_class : ''; ?>><?php echo $row['BoxOffice']; ?></td>
-				            <th>
-                                                <form>
-                                                    <input type="button" value="Add to Favorites" onClick="insertToFavorites(<?php print $row['MovieID']; print 1;?>)" /> 
-                                                </form>
-                                            </th>
-                                    </tr>
+			            <th>
+                            <form>
+                                <input type="button" value="Add to Favorites" onClick="insertToFavorites(<?php print $row['MovieID']; ?>)" /> 
+                            </form>
+                        </th>
+                    </tr>
 				    <?php endwhile; ?>
 				</table>
 			</div>
@@ -191,3 +203,14 @@ if (!$conn) {
 
 
 </html>
+
+<script>
+	
+	function insertToFavorites(v) {
+    	document.location.href = "movies.php?movieID=" + v;
+	}
+	function removeFromFavorites(r) {
+	    document.location.href = "favorites.php?movieID=" + r;
+	}
+
+</script>

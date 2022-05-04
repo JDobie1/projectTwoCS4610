@@ -13,7 +13,7 @@
 $dbhost = "localhost";
 $dbuser = "root";
 $dbpassword = "";
-$dbname = "project_two_cs4610";
+$dbname = "matt";
 
 $conn = mysqli_connect($dbhost, $dbuser, $dbpassword, $dbname);
 

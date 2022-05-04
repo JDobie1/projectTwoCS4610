@@ -19,19 +19,6 @@
     <!--Importing my own external files.-->
     <link href="../css/style.css" rel="stylesheet" type="text/css" />
     <script src="../js/script.js" type="text/javascript"></script>
-    
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: Arial, Helvetica, sans-serif;
-            width: 100%;
-            min-height: 100%;
-            background-image: url('../background_noText.png');
-            background-repeat: no-repeat;
-            background-attachment: fixed;
-        }
-    </style>
   </head>
 
   <body>
@@ -51,15 +38,12 @@
             </li>
             <li class="nav-item">
               <a class="nav-link" href="../movies.php">Movies</a>
-            </li>
+            </li>                                    
             <li class="nav-item">
               <a class="nav-link" href="watchlist.php">Watchlist</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="favorites.php">Favorites</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="schedule.php">Schedule</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="users.php">Users</a>
@@ -69,21 +53,22 @@
             </li>
           </ul>
 
+
           <ul class="navbar-nav ms-auto">
             <?php if(count($_SESSION) > 0) : ?>
               <li class="nav-item">
-                          <a class="nav-link" href="myProfile.php" data-bs-target="#myModal" data-bs-toggle="modal"><?php echo $_SESSION['fName']?></a>
-                      </li>
+                  <a class="nav-link" href="myProfile.php" data-bs-target="#myModal" data-bs-toggle="modal"><?php echo $_SESSION['fName']?></a>
+              </li>
             <?php  endif ?>
-                    <?php if(count($_SESSION) == 0) : ?>
+            <?php if(count($_SESSION) == 0) : ?>
               <li class="nav-item">
-                          <a class="nav-link" href="register.php" data-bs-target="#myModal" data-bs-toggle="modal">Register</a>
-                      </li>
-                      <li class="nav-item active">
-                          <a class="nav-link" href="login.php" data-bs-target="#myModal" data-bs-toggle="modal">Login</a>
-                      </li>
+                  <a class="nav-link" href="register.php" data-bs-target="#myModal" data-bs-toggle="modal">Register</a>
+              </li>
+              <li class="nav-item active">
+                  <a class="nav-link" href="login.php" data-bs-target="#myModal" data-bs-toggle="modal">Login</a>
+              </li>
             <?php  endif ?>
-                </ul>
+          </ul>
         </div>
 
       </nav>
@@ -94,7 +79,7 @@
 
       <div class="col-md-12">
         <h2 class="pageTitle">User Login</h2>
-        <form method="POST" action="register.php">
+        <form method="POST" action="login.php">
 
           <?php include('errors.php'); ?>
 

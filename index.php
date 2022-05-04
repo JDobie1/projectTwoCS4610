@@ -69,9 +69,6 @@
 							<a class="nav-link" href="pages/favorites.php">Favorites</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" href="pages/schedule.php">Schedule</a>
-						</li>
-						<li class="nav-item">
 							<a class="nav-link" href="pages/users.php">Users</a>
 						</li>
 						<li class="nav-item">

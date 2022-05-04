@@ -33,19 +33,6 @@
 		<!--Importing my own external files.-->
 		<link href="../css/style.css" rel="stylesheet" type="text/css" />
 		<script src="../js/script.js" type="text/javascript"></script>
-                
-                <style>
-                    body {
-                        margin: 0;
-                        padding: 0;
-                        font-family: Arial, Helvetica, sans-serif;
-                        width: 100%;
-                        min-height: 100%;
-                        background-image: url('../background_noText.png');
-                        background-repeat: no-repeat;
-                        background-attachment: fixed;
-                    }
-                </style>
 	</head>
 
 
@@ -59,28 +46,25 @@
 
 				<div class="collapse navbar-collapse" id="navbarSupportedContent">
 					<ul class="navbar-nav mr-auto">
-			            <li class="nav-item">
-			              <a class="nav-link" href="../index.php">Home</a>
-			            </li>
-                                    <li class="nav-item">
-                                      <a class="nav-link" href="../movies.php">Movies</a>
-                                    </li> 
-			            <li class="nav-item">
-			              <a class="nav-link" href="watchlist.php">Watchlist</a>
-			            </li>
-			            <li class="nav-item">
-			              <a class="nav-link" href="favorites.php">Favorites</a>
-			            </li>
-			            <li class="nav-item">
-			              <a class="nav-link" href="schedule.php">Schedule</a>
-			            </li>
-			            <li class="nav-item">
-			              <a class="nav-link" href="users.php">Users</a>
-			            </li>
-			            <li class="nav-item active">
-			              <a class="nav-link" href="theaters.php">Theaters</a>
-			            </li>
-			          </ul>
+		        <li class="nav-item">
+		          <a class="nav-link" href="../index.php">Home</a>
+		        </li>
+		        <li class="nav-item">
+		          <a class="nav-link" href="../movies.php">Movies</a>
+		        </li>                                    
+		        <li class="nav-item">
+		          <a class="nav-link" href="watchlist.php">Watchlist</a>
+		        </li>
+		        <li class="nav-item">
+		          <a class="nav-link" href="favorites.php">Favorites</a>
+		        </li>
+		        <li class="nav-item">
+		          <a class="nav-link" href="users.php">Users</a>
+		        </li>
+		        <li class="nav-item active">
+		          <a class="nav-link" href="theaters.php">Theaters</a>
+		        </li>
+		      </ul>
 
 					<ul class="navbar-nav ms-auto">
 						<?php if(count($_SESSION) > 0) : ?>
@@ -112,8 +96,55 @@
 		<section>
 			<div class="col-md-12">
 		        <h2 class="pageTitle">Theaters</h2>
-		        
 		    </div>
+
+
+		    <div class="row">
+		    	<?php
+
+					$query = "SELECT * 
+								FROM theater";
+
+					$result = mysqli_query($db, $query);
+
+
+					while($row = mysqli_fetch_array($result)) {
+						$theaterId = $row[0];
+						$type = $row[1];
+						$street = $row[2];
+						$city = $row[3];
+						$state = $row[4];
+						$zip = $row[5];
+
+						echo '<div class="card userResult col-md-6 offset-md-3"> 
+							<h4>Type: ' . $type . '</h4> 
+							<h4>Street:' . $street . '</h4>
+							<h4>City: ' . $city . '</h4>
+							<h4>State: ' . $state . '</h4>
+							<h4>Zip: ' . $zip . '</h4>
+							<form method="POST" action="theaters.php">
+								<input type="hidden" value="' . $theaterId . '" name="theaterId">
+								<input type="hidden" value="' . $type . '" name="type">
+								<input type="hidden" value="' . $street . '" name="street">
+								<input type="hidden" value="' . $city . '" name="city">
+								<input type="hidden" value="' . $state . '" name="state">
+								<input type="hidden" value="' . $zip . '" name="zip">
+								<input type="hidden" value="' . $_SESSION["fName"] . '" name="fName">
+								<input type="hidden" value="' . $_SESSION["lName"] . '" name="lName">
+								<button type="submit" class="btn friendRequest" name="view_theater">View More</button>
+							</form>
+							
+						</div>';
+					}
+
+					
+		    	?>
+
+		    </div>
+
+
+
+
 		</section>
 
 

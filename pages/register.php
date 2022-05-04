@@ -22,19 +22,6 @@
 		<!--Importing my own external files.-->
 		<link href="../css/style.css" rel="stylesheet" type="text/css" />
 		<script src="../js/script.js" type="text/javascript"></script>
-                
-                <style>
-                    body {
-                        margin: 0;
-                        padding: 0;
-                        font-family: Arial, Helvetica, sans-serif;
-                        width: 100%;
-                        min-height: 100%;
-                        background-image: url('../background_noText.png');
-                        background-repeat: no-repeat;
-                        background-attachment: fixed;
-                    }
-                </style>
 	</head>
 
 
@@ -48,28 +35,25 @@
 
 				<div class="collapse navbar-collapse" id="navbarSupportedContent">
 					<ul class="navbar-nav mr-auto">
-						<li class="nav-item">
-							<a class="nav-link" href="../index.php">Home</a>
-						</li>
-                                                <li class="nav-item">
-                                                        <a class="nav-link" href="../movies.php">Movies</a>
-                                                </li>    
-						<li class="nav-item">
-							<a class="nav-link" href="watchlist.php">Watchlist</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link" href="favorites.php">Favorites</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link" href="schedule.php">Schedule</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link" href="users.php">Users</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link" href="theaters.php">Theaters</a>
-						</li>
-					</ul>
+				        <li class="nav-item">
+				          <a class="nav-link" href="../index.php">Home</a>
+				        </li>
+				        <li class="nav-item">
+				          <a class="nav-link" href="../movies.php">Movies</a>
+				        </li>                                    
+				        <li class="nav-item">
+				          <a class="nav-link" href="watchlist.php">Watchlist</a>
+				        </li>
+				        <li class="nav-item active">
+				          <a class="nav-link" href="favorites.php">Favorites</a>
+				        </li>
+				        <li class="nav-item">
+				          <a class="nav-link" href="users.php">Users</a>
+				        </li>
+				        <li class="nav-item">
+				          <a class="nav-link" href="theaters.php">Theaters</a>
+				        </li>
+				      </ul>
 
 					<ul class="navbar-nav ms-auto">
 						<?php if(count($_SESSION) > 0) : ?>
@@ -92,7 +76,7 @@
 		</header>
 
 		<section>
-			<div style="color: black; background-color: rgba(211,211,211, .5)">
+			<div class="col-md-12">
 				<h2 class="pageTitle">Register a New User</h2>
 				<form method="POST" action="register.php">
 

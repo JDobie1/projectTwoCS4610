@@ -33,19 +33,6 @@
 		<!--Importing my own external files.-->
 		<link href="../css/style.css" rel="stylesheet" type="text/css" />
 		<script src="../js/script.js" type="text/javascript"></script>
-                
-                <style>
-                    body {
-                        margin: 0;
-                        padding: 0;
-                        font-family: Arial, Helvetica, sans-serif;
-                        width: 100%;
-                        min-height: 100%;
-                        background-image: url('../background_noText.png');
-                        background-repeat: no-repeat;
-                        background-attachment: fixed;
-                    }
-                </style>
 	</head>
 
 
@@ -59,28 +46,26 @@
 
 				<div class="collapse navbar-collapse" id="navbarSupportedContent">
 					<ul class="navbar-nav mr-auto">
-			            <li class="nav-item">
-			              <a class="nav-link" href="../index.php">Home</a>
-			            </li>
-                                    <li class="nav-item">
-                                      <a class="nav-link" href="../movies.php">Movies</a>
-                                    </li>    
-			            <li class="nav-item">
-			              <a class="nav-link" href="watchlist.php">Watchlist</a>
-			            </li>
-			            <li class="nav-item">
-			              <a class="nav-link" href="favorites.php">Favorites</a>
-			            </li>
-			            <li class="nav-item">
-			              <a class="nav-link" href="schedule.php">Schedule</a>
-			            </li>
-			            <li class="nav-item">
-			              <a class="nav-link" href="users.php">Users</a>
-			            </li>
-			            <li class="nav-item">
-			              <a class="nav-link" href="theaters.php">Theaters</a>
-			            </li>
-			          </ul>
+				        <li class="nav-item">
+				          <a class="nav-link" href="../index.php">Home</a>
+				        </li>
+				        <li class="nav-item">
+				          <a class="nav-link" href="../movies.php">Movies</a>
+				        </li>                                    
+				        <li class="nav-item">
+				          <a class="nav-link" href="watchlist.php">Watchlist</a>
+				        </li>
+				        <li class="nav-item active">
+				          <a class="nav-link" href="favorites.php">Favorites</a>
+				        </li>
+				        <li class="nav-item">
+				          <a class="nav-link" href="users.php">Users</a>
+				        </li>
+				        <li class="nav-item">
+				          <a class="nav-link" href="theaters.php">Theaters</a>
+				        </li>
+				      </ul>
+
 
 					<ul class="navbar-nav ms-auto">
 						<?php if(count($_SESSION) > 0) : ?>
@@ -110,7 +95,7 @@
 		</header>
 
 		<section>
-			<div style="color: black; background-color: rgba(211,211,211, .5)">
+			<div class="col-md-12">
 		        <h2 class="pageTitle">My Profile</h2>
 		        <form method="POST" action="myProfile.php">
 
@@ -125,9 +110,9 @@
 		          	$results = mysqli_query($db, $query);
 
 					while($row = mysqli_fetch_array($results)) {
-						$fName = $row[0];
-						$lName = $row[1];
-						$role = $row[2];
+						$fName = $row[1];
+						$lName = $row[2];
+						$role = $row[3];
 						$state = $row[4];
 						$zip = $row[5];
 					}
@@ -169,6 +154,157 @@
 		          </div>
 		        </form>
 		    </div>
+
+
+
+		    <div>
+		    	<h3 class="pageSubtitle">Friend Requests</h3>
+		    	<div>
+		    	<?php
+					$lName = mysqli_real_escape_string($db, $_SESSION['lName']);
+					$fName = mysqli_real_escape_string($db, $_SESSION['fName']);
+
+					$query = "SELECT UserID 
+								FROM users
+								WHERE Lname = '$lName' AND Fname = '$fName'";
+
+					$result = mysqli_query($db, $query);
+
+					$userId = $result->fetch_array()[0];
+
+					$query = "SELECT * 
+								FROM FriendRequest
+								WHERE UserIDReciever = '$userId'";
+
+					$result = mysqli_query($db, $query);
+
+					while($row = mysqli_fetch_array($result)) {
+						$senderId = $row[0];
+						$recieverId = $row[1];
+						$accepted = $row[2];
+
+						if($accepted == 0)
+						{
+							if(!isset($result2)){
+								echo "<h4 class='pageSubtitle'>Pending Friend Requests</h4>";
+							}
+
+							$query2 = "SELECT * 
+								FROM users
+								WHERE UserID = '$senderId'";
+
+							$result2 = mysqli_query($db, $query2);
+
+							while($row2 = mysqli_fetch_array($result2)) {
+								//print_r($row);
+								$fName = $row2[1];
+								$lName = $row2[2];
+								$role = $row2[3];
+								$state = $row2[4];
+								$zip = $row2[5];
+
+								echo '<div class="card userResult col-md-6 offset-md-3"> 
+										<h4>First Name: ' . $fName . '</h4> 
+										<h4>Last Name:' . $lName . '</h4>
+										<h4>Role: ' . $role . '</h4>
+										<h4>State: ' . $state . '</h4>
+										<h4>Zip: ' . $zip . '</h4>
+										<form method="POST" action="myProfile.php">
+											<input type="hidden" value="' . $senderId . '" name="senderId">
+											<input type="hidden" value="' . $recieverId . '" name="recieverId">
+											<button type="submit" class="btn friendRequest" name="accept_friend_request">Accept</button>
+										</form>
+									</div>';
+							}
+
+						}else if($accepted == 1){
+							if(!isset($result3)){
+								echo "<h4 class='pageSubtitle'>Accepted Friend Requests</h4>";
+							}
+							
+							$query3 = "SELECT * 
+								FROM users
+								WHERE UserID = '$senderId'";
+
+							$result3 = mysqli_query($db, $query3);
+
+
+							while($row3 = mysqli_fetch_array($result3)) {
+								$fName = $row3[1];
+								$lName = $row3[2];
+								$role = $row3[3];
+								$state = $row3[4];
+								$zip = $row3[5];
+
+								echo '<div class="card userResult col-md-6 offset-md-3"> 
+										<h4>First Name: ' . $fName . '</h4> 
+										<h4>Last Name:' . $lName . '</h4>
+										<h4>Role: ' . $role . '</h4>
+										<h4>State: ' . $state . '</h4>
+										<h4>Zip: ' . $zip . '</h4>
+										<form method="POST" action="myProfile.php">
+											<input type="hidden" value="' . $senderId . '" name="senderId">
+											<input type="hidden" value="' . $recieverId . '" name="recieverId">
+											<button type="submit" class="btn friendRequest" name="remove_friend_request">Remove</button>
+										</form>
+									</div>';
+							}
+						}
+
+					}
+
+
+
+
+					$query4 = "SELECT * 
+								FROM FriendRequest
+								WHERE UserIDSender = '$userId'";
+
+
+					$result4 = mysqli_query($db, $query4);
+
+					while($row4 = mysqli_fetch_array($result4)) {
+						$senderId = $row4[0];
+						$recieverId = $row4[1];
+						$accepted = $row4[2];
+
+						if($accepted == 0){
+							if(!isset($result5)){
+								echo "<h4 class='pageSubtitle'>My Pending Friend Requests</h4>";
+							}
+
+							$query5 = "SELECT * 
+								FROM users
+								WHERE UserID = '$recieverId'";
+
+							$result5 = mysqli_query($db, $query5);
+
+							while($row5 = mysqli_fetch_array($result5)) {
+								$fName = $row5[1];
+								$lName = $row5[2];
+								$role = $row5[3];
+								$state = $row5[4];
+								$zip = $row5[5];
+
+								echo '<div class="card userResult col-md-6 offset-md-3"> 
+										<h4>First Name: ' . $fName . '</h4> 
+										<h4>Last Name: ' . $lName . '</h4>
+										<h4>Role: ' . $role . '</h4>
+										<h4>State: ' . $state . '</h4>
+										<h4>Zip: ' . $zip . '</h4>
+										<form method="POST" action="myProfile.php">
+											<input type="hidden" value="' . $senderId . '" name="senderId">
+											<input type="hidden" value="' . $recieverId . '" name="recieverId">
+											<button type="submit" class="btn friendRequest" name="delete_friend_request">Delete</button>
+										</form>
+									</div>';
+							}
+
+						}
+					}
+
+		    	?>
+		    </div>
 		</section>
 
 
@@ -179,6 +315,5 @@
 
 
 	</body>
-
 
 </html>
