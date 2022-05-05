@@ -16,9 +16,11 @@ $dbpassword = "";
 $dbname = "project_two_cs4610";
 
 $conn = mysqli_connect($dbhost, $dbuser, $dbpassword, $dbname);
-$mID = filter_input(INPUT_GET, "wmovieID");
-$watchDelete = "DELETE FROM watchlist WHERE BoxOffice = $mID";
-$query= mysqli_query($conn, $watchDelete);
+
+    $mID = filter_input(INPUT_GET, "movieID");
+    $watchDelete = "DELETE FROM watchlist WHERE MovieID = $mID";
+    $query = mysqli_query($conn, $watchDelete);
+
 
 
 if (!$conn) {
@@ -166,7 +168,7 @@ if (!$conn) {
                     <td<?php echo $column == 'BoxOffice' ? $add_class : ''; ?>><?php echo $row['BoxOffice']; ?></td>
                     <th>
                         <form>
-                            <input type="button" value="Delete" onClick="removeFromWatch(<?php print $row['wMovieID']; ?>)" />
+                            <input type="button" value="Delete" onClick="removeFromWatch(<?php print $row['MovieID']; ?>)" />
                         </form>
                     </th>
                 </tr>
