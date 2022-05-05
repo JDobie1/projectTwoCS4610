@@ -1,6 +1,11 @@
 <?php 
 	include('pages/server.php');
+	$dbhost = "localhost";
+	$dbuser = "root";
+	$dbpassword = "";
+	$dbname = "project_two_cs4610";
 
+	$conn = mysqli_connect($dbhost, $dbuser, $dbpassword, $dbname);
 
 	if (!isset($_SESSION['fName'])) {
 	  	header('location: pages/login.php');
@@ -9,19 +14,21 @@
 	  	session_destroy();
 	  	header("location: pages/login.php");
 	  }
-        $x = filter_input(INPUT_GET, "movieID");
-        $y = filter_input(INPUT_GET, "wMovieID");
-	$dbhost = "localhost";
-	$dbuser = "root";
-	$dbpassword = "";
-	$dbname = "project_two_cs4610";
-
-	$conn = mysqli_connect($dbhost, $dbuser, $dbpassword, $dbname);
-        $insert = "INSERT INTO favorites (MovieID, Name, BoxOffice, Release_date, Production_cost) SELECT MovieID, Name, BoxOffice, Release_date, Production_cost FROM movies WHERE MovieID = $x";
-        $resultInsert = mysqli_query($conn, $insert);
         
-        $insertWatch = "INSERT INTO watchlist (MovieID, Name, BoxOffice, Release_date, Production_cost) SELECT MovieID, Name, BoxOffice, Release_date, Production_cost FROM movies WHERE MovieID = $y";
-        $resultWatch = mysqli_query($conn, $insertWatch);
+        
+        if (!filter_input(INPUT_GET, "movieID")) {
+            $y = filter_input(INPUT_GET, "wMovieID");
+            $insertWatch = "INSERT INTO watchlist (MovieID, Name, BoxOffice, Release_date, Production_cost) SELECT MovieID, Name, BoxOffice, Release_date, Production_cost FROM movies WHERE MovieID = $y";
+            $resultWatch = mysqli_query($conn, $insertWatch);
+        }
+        else {
+            $x = filter_input(INPUT_GET, "movieID");
+            $insert = "INSERT INTO favorites (MovieID, Name, BoxOffice, Release_date, Production_cost) SELECT MovieID, Name, BoxOffice, Release_date, Production_cost FROM movies WHERE MovieID = $x";
+            $resultInsert = mysqli_query($conn, $insert);
+        }
+
+        
+
 ?>
 
 <!DOCTYPE html>
@@ -170,7 +177,7 @@
 			            <th>
                             <form>
                                 <input type="button" value="Add to Favorites" onClick="insertToFavorites(<?php print $row['MovieID']; ?>)" /> 
-                                <input type="button" value="Add to Watchlist" onClick="insertToWatch(<?php print $row['BoxOffice']; ?>)" /> 
+                                <input type="button" value="Add to Watchlist" onClick="insertToWatch(<?php print $row['MovieID']; ?>)" /> 
                             </form>
                         </th>
                     </tr>

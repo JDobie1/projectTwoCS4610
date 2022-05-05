@@ -9,7 +9,7 @@ function removeFromFavorites(r) {
     document.location.href = "favorites.php?movieID=" + r;
 }
 function insertToWatch(b) {
-    document.location.href = "movies.php?wmovieID=" + b;
+    document.location.href = "movies.php?wMovieID=" + b;
 }
 function removeFromWatch(c) {
     document.location.href = "watchlist.php?movieID=" + c;
