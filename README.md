@@ -9,7 +9,7 @@ your friends to a theator to catch the screening of a movie together.
 SETUP
 ------------------------------------------------------------------------------------------------------------------------------------------------------
 1. In order to setup the project properly you will need to in load up phpMyAdmin and create a database called 'project_two_cs4610'.
-2. Upon creating the database you will need to navigate to the SQL tab and insert the Create/Alter tables from file " //insert file name here "
+2. Upon creating the database you will need to navigate to the SQL tab and insert the Create/Alter tables from file " Proj2_SQL_CREATE_TABLE-FINAL1 "
 3. Once the tables are created it is now time to populate them!
 4. Navigate to you local host folder (i.e. ../htdocs/projectTwoCS4610/load.php)
 //you do not need to have login cridentials to navigate to this as it isn't public facing and is ment for administrative use. from there you can load
@@ -50,4 +50,4 @@ The 'Theaters' page is where you can go to meet with other users at theaters nea
 
 Load.php
 ------------------------------------------------------------------------------------------------------------------------------------------------------
-If you ever edit the data in the .csv files in the ../htdocs/projectTwoCS4510/data folder all you have to do is DROP all your tables from the data base, recreate them using the ' //insert file name here ' file, and then reload the data by clicking the buttons on load.php. The reason this is done is because auto increment is done so if you click those buttons on load.php more then once you will get duplicates.
+If you ever edit the data in the .csv files in the ../htdocs/projectTwoCS4510/data folder all you have to do is DROP all your tables from the data base, recreate them using the 'Proj2_SQL_CREATE_TABLE-FINAL1' file, and then reload the data by clicking the buttons on load.php. The reason this is done is because auto increment is done so if you click those buttons on load.php more then once you will get duplicates.
